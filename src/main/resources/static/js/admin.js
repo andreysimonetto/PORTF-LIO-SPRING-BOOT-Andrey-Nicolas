@@ -11,16 +11,18 @@ async function prepararSecao(nome, csrf) {
     const secao = document.querySelector("#" + nome + "-admin");
     const form = secao.querySelector("form");
     const lista = secao.querySelector("ul");
-    const estado = form.querySelector("[role='status']");
+    const estado = secao.querySelector("[role='status']");
     const botao = form.querySelector("[type='submit']");
     const cancelar = form.querySelector("[data-cancelar]");
     const campos = [...form.querySelectorAll("[name]")];
+    const permiteCadastro = !form.hidden;
     let idEmEdicao = null;
 
     function limpar() {
         idEmEdicao = null;
         form.reset();
-        botao.textContent = "Cadastrar";
+        botao.textContent = permiteCadastro ? "Cadastrar" : "Salvar edição";
+        form.hidden = !permiteCadastro;
         cancelar.hidden = true;
     }
 
@@ -42,6 +44,7 @@ async function prepararSecao(nome, csrf) {
             editar.type = "button";
             editar.addEventListener("click", () => {
                 idEmEdicao = registro.id;
+                form.hidden = false;
                 for (const campo of campos) {
                     campo.value = registro[campo.name];
                 }
@@ -63,13 +66,17 @@ async function prepararSecao(nome, csrf) {
     form.addEventListener("submit", async evento => {
         evento.preventDefault();
 
+        const editando = idEmEdicao !== null;
+        if (!editando && !permiteCadastro) {
+            return;
+        }
+
         const dados = Object.fromEntries(campos.map(campo => [campo.name, campo.value.trim()]));
         if (Object.values(dados).some(valor => !valor)) {
             estado.textContent = "Preencha os campos.";
             return;
         }
 
-        const editando = idEmEdicao !== null;
         const caminho = "/api/admin/" + nome + (editando ? "/" + idEmEdicao : "");
         botao.disabled = true;
 

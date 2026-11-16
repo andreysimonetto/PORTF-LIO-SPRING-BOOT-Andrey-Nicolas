@@ -26,7 +26,7 @@ Se você já tinha aberto o Codespace antes de receber a versão nova, pare o se
 
 1. Com o site aberto, clique em **Área administrativa** no rodapé.
 2. Entre com o usuário `admin` e a senha gerada pelo Spring Boot. Ela aparece no terminal de quem iniciou a aplicação, depois de `Using generated security password:`.
-3. Preencha o formulário da seção correspondente para cadastrar. Para alterar algo que já existe, clique em **Editar**, mude os campos e salve. As mudanças aparecem no portfólio e ficam no H2 depois de reiniciar o servidor.
+3. Na seção **Tecnologias**, preencha o formulário para cadastrar ou clique em **Editar** para alterar um item. Na lista **Projetos**, clique em **Editar** para abrir o formulário do projeto. Os dados ficam no H2 depois de reiniciar o servidor.
 
 Para usar uma senha própria, configure a variável de ambiente `SPRING_SECURITY_USER_PASSWORD` no Codespaces antes de iniciar a aplicação.
 

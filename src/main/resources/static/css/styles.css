@@ -82,7 +82,7 @@ p { color: var(--suave); }
 .formulario { max-width: 35rem; display: grid; gap: 0.8rem; }
 .formulario .botao { justify-self: start; }
 .formulario [role="status"] { margin: 0; }
-#estado-tecnologias:empty, #estado-projetos:empty { margin: 0; }
+#estado-tecnologias:empty { margin: 0; }
 
 label { display: grid; gap: 0.25rem; font-weight: 600; }
 
