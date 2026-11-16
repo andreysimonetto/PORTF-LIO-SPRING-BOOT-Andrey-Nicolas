@@ -15,7 +15,7 @@ public class Seguranca {
                 .requestMatchers("/admin.html", "/api/admin/**").authenticated()
                 .anyRequest().permitAll()
             )
-            .formLogin(login -> login.defaultSuccessUrl("/admin.html").permitAll())
+            .formLogin(login -> login.defaultSuccessUrl("/admin.html", true).permitAll())
             .logout(logout -> logout.logoutSuccessUrl("/"))
             .csrf(csrf -> csrf.ignoringRequestMatchers("/api/contato"))
             .build();
