@@ -13,8 +13,11 @@ Sou estudante do 3º ano do ensino médio e do curso técnico em Análise e Dese
 
 3. Na aba **Ports**, abra no navegador o endereço da porta **8080**.
 
+Se você já tinha aberto o Codespace antes de receber a versão nova, pare o servidor com **Ctrl+C**, rode `git pull --ff-only origin main` e inicie de novo com `mvn spring-boot:run`.
+
 ## Como funciona
 
+- A seção **O que eu estudei em 2026** resume as atividades dos três trimestres.
 - A página usa HTML, CSS e JavaScript. Dá para filtrar tecnologias por categoria ou nível e alternar entre tema claro e escuro.
 - O Spring Boot publica a página e disponibiliza `GET /api/tecnologias` e `POST /api/contato`.
 - O formulário salva as mensagens no banco H2 do Codespace que está executando o site. O arquivo fica em `dados/`.
