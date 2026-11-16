@@ -116,3 +116,40 @@ botaoTema.addEventListener("click", () => {
 });
 
 carregarTecnologias();
+
+async function carregarProjetos() {
+    const listaProjetos = document.querySelector("#lista-projetos");
+    const estadoProjetos = document.querySelector("#estado-projetos");
+
+    try {
+        const resposta = await fetch("/api/projetos");
+        if (!resposta.ok) {
+            throw new Error("Falha na API");
+        }
+
+        const projetos = await resposta.json();
+        estadoProjetos.textContent = projetos.length ? "" : "Nenhum projeto cadastrado.";
+
+        for (const projeto of projetos) {
+            const cartao = document.createElement("article");
+            cartao.className = "cartao";
+
+            const titulo = document.createElement("h3");
+            titulo.textContent = projeto.nome;
+
+            const descricao = document.createElement("p");
+            descricao.textContent = projeto.descricao;
+
+            const link = document.createElement("a");
+            link.href = projeto.link;
+            link.textContent = "Ver projeto";
+
+            cartao.append(titulo, descricao, link);
+            listaProjetos.append(cartao);
+        }
+    } catch {
+        estadoProjetos.textContent = "Não deu pra carregar os projetos. Atualize a página pra tentar de novo.";
+    }
+}
+
+carregarProjetos();

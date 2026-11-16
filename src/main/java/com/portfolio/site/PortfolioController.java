@@ -3,16 +3,21 @@ package com.portfolio.site;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api")
@@ -26,24 +31,70 @@ public class PortfolioController {
 
     @GetMapping("/tecnologias")
     public List<Tecnologia> listarTecnologias() {
-        return List.of(
-            new Tecnologia("PHP", "Linguagem", "Básico", "Estudei lógica, estruturas de decisão e orientação a objetos."),
-            new Tecnologia("PDO", "Biblioteca", "Em estudo", "Usei pra conectar o PHP com o banco de dados."),
-            new Tecnologia("Supabase", "Plataforma", "Em estudo", "Vi como usar o banco PostgreSQL da plataforma com PHP."),
-            new Tecnologia("Java", "Linguagem", "Básico", "Fiz exercícios de tipos, Scanner, Math e orientação a objetos."),
-            new Tecnologia("Swing", "Biblioteca", "Em estudo", "Usei pra fazer janelas e botões em Java."),
-            new Tecnologia("NetBeans", "IDE", "Básico", "Usei nas atividades pra escrever e rodar código Java."),
-            new Tecnologia("JDK, JRE e JVM", "Ambiente Java", "Em estudo", "Estudei as ferramentas pra desenvolver e o que é usado pra executar um programa Java."),
-            new Tecnologia("Spring Boot", "Framework", "Em estudo", "Vi arquitetura MVC nas aulas e usei Spring Boot na API deste portfólio."),
-            new Tecnologia("Spring Initializr", "Ferramenta", "Básico", "Usei pra começar um projeto e escolher as dependências."),
-            new Tecnologia("GitHub Codespaces", "Ambiente on-line", "Básico", "Usei o editor e o terminal no navegador pra rodar a aplicação."),
-            new Tecnologia("Git e GitHub", "Ferramenta", "Básico", "Guardo o código das atividades e entrego pelo link do repositório."),
-            new Tecnologia("HTML", "Front-end", "Básico", "Usei pra fazer as partes da página e o formulário."),
-            new Tecnologia("CSS", "Front-end", "Básico", "Usei pra arrumar o visual da página no computador e no celular."),
-            new Tecnologia("JavaScript", "Linguagem", "Em estudo", "Usei nos filtros, no tema escuro e no formulário."),
-            new Tecnologia("H2", "Banco de dados", "Em estudo", "Usei neste projeto pra guardar as mensagens do formulário."),
-            new Tecnologia("JDBC", "API Java", "Em estudo", "Usei com o JdbcTemplate pra salvar as mensagens no H2.")
+        return banco.query(
+            "SELECT id, nome, categoria, nivel, descricao FROM tecnologias ORDER BY id",
+            (linha, numero) -> new Tecnologia(
+                linha.getLong("id"), linha.getString("nome"), linha.getString("categoria"),
+                linha.getString("nivel"), linha.getString("descricao")
+            )
         );
+    }
+
+    @GetMapping("/projetos")
+    public List<Projeto> listarProjetos() {
+        return banco.query(
+            "SELECT id, nome, descricao, link FROM projetos ORDER BY id",
+            (linha, numero) -> new Projeto(
+                linha.getLong("id"), linha.getString("nome"), linha.getString("descricao"), linha.getString("link")
+            )
+        );
+    }
+
+    @GetMapping("/admin/csrf")
+    public CsrfToken token(CsrfToken token) {
+        return token;
+    }
+
+    @PostMapping("/admin/tecnologias")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void cadastrarTecnologia(@Valid @RequestBody Tecnologia dados) {
+        banco.update(
+            "INSERT INTO tecnologias (nome, categoria, nivel, descricao) VALUES (?, ?, ?, ?)",
+            dados.nome().strip(), dados.categoria().strip(), dados.nivel().strip(), dados.descricao().strip()
+        );
+    }
+
+    @PutMapping("/admin/tecnologias/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editarTecnologia(@PathVariable long id, @Valid @RequestBody Tecnologia dados) {
+        exigirRegistro(banco.update(
+            "UPDATE tecnologias SET nome = ?, categoria = ?, nivel = ?, descricao = ? WHERE id = ?",
+            dados.nome().strip(), dados.categoria().strip(), dados.nivel().strip(), dados.descricao().strip(), id
+        ));
+    }
+
+    @PostMapping("/admin/projetos")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void cadastrarProjeto(@Valid @RequestBody Projeto dados) {
+        banco.update(
+            "INSERT INTO projetos (nome, descricao, link) VALUES (?, ?, ?)",
+            dados.nome().strip(), dados.descricao().strip(), dados.link().strip()
+        );
+    }
+
+    @PutMapping("/admin/projetos/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void editarProjeto(@PathVariable long id, @Valid @RequestBody Projeto dados) {
+        exigirRegistro(banco.update(
+            "UPDATE projetos SET nome = ?, descricao = ?, link = ? WHERE id = ?",
+            dados.nome().strip(), dados.descricao().strip(), dados.link().strip(), id
+        ));
+    }
+
+    private void exigirRegistro(int alterados) {
+        if (alterados == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/contato")
@@ -57,7 +108,20 @@ public class PortfolioController {
         );
     }
 
-    public record Tecnologia(String nome, String categoria, String nivel, String descricao) {}
+    public record Tecnologia(
+        Long id,
+        @NotBlank @Size(max = 100) String nome,
+        @NotBlank @Size(max = 60) String categoria,
+        @NotBlank @Size(max = 40) String nivel,
+        @NotBlank @Size(max = 600) String descricao
+    ) {}
+
+    public record Projeto(
+        Long id,
+        @NotBlank @Size(max = 100) String nome,
+        @NotBlank @Size(max = 600) String descricao,
+        @NotBlank @Size(max = 500) @Pattern(regexp = "https?://[^/\\s]+(?:/[^\\s]*)?") String link
+    ) {}
 
     public record Mensagem(
         @NotBlank @Size(max = 100) String nome,

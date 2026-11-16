@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Área administrativa</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/admin.js" defer></script>
+</head>
+<body>
+    <header class="topo">
+        <div class="largura barra">
+            <a class="marca" href="/">Andrey e Nicolas</a>
+            <form id="sair" action="/logout" method="post" hidden>
+                <button type="submit">Sair</button>
+            </form>
+        </div>
+    </header>
+    <main class="largura">
+        <section>
+            <h1>Área administrativa</h1>
+            <p id="estado-admin" role="status">Carregando…</p>
+        </section>
+        <section id="tecnologias-admin" hidden>
+            <h2>Tecnologias</h2>
+            <form class="cartao formulario">
+                <label>Nome <input name="nome" maxlength="100" required></label>
+                <label>Categoria <input name="categoria" maxlength="60" required></label>
+                <label>Nível <input name="nivel" maxlength="40" required></label>
+                <label>Descrição <textarea name="descricao" rows="3" maxlength="600" required></textarea></label>
+                <div class="filtros">
+                    <button class="botao" type="submit">Cadastrar</button>
+                    <button type="button" data-cancelar hidden>Cancelar edição</button>
+                </div>
+                <p role="status"></p>
+            </form>
+            <ul class="lista-admin"></ul>
+        </section>
+        <section id="projetos-admin" hidden>
+            <h2>Projetos</h2>
+            <form class="cartao formulario">
+                <label>Nome <input name="nome" maxlength="100" required></label>
+                <label>Descrição <textarea name="descricao" rows="3" maxlength="600" required></textarea></label>
+                <label>Link <input name="link" type="url" maxlength="500" placeholder="https://" required></label>
+                <div class="filtros">
+                    <button class="botao" type="submit">Cadastrar</button>
+                    <button type="button" data-cancelar hidden>Cancelar edição</button>
+                </div>
+                <p role="status"></p>
+            </form>
+            <ul class="lista-admin"></ul>
+        </section>
+    </main>
+</body>
+</html>

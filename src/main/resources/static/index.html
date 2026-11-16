@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Portfólio | Andrey Simoneto</title>
+    <title>Portfólio | Andrey e Nicolas</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js" defer></script>
 </head>
 <body>
     <header class="topo">
         <div class="largura barra">
-            <a class="marca" href="#sobre">Andrey Simoneto</a>
+            <a class="marca" href="#sobre">Andrey e Nicolas</a>
             <nav aria-label="Menu principal">
-                <a href="#trimestres">Trimestres</a>
+                <a href="#trimestres">Estudos</a>
                 <a href="#tecnologias">Tecnologias</a>
                 <a href="#projetos">Projetos</a>
                 <a href="#contato">Contato</a>
@@ -23,26 +23,23 @@
     <main class="largura">
         <section class="introducao" id="sobre">
             <p class="curso">3º ano do ensino médio · Técnico em ADS</p>
-            <h1>Oi, eu sou o Andrey!</h1>
-            <p>Tô no 3º ano e faço o técnico em ADS. Na aula comecei com PHP, depois fui pro Java. Aqui eu juntei o que estudei e alguns exercícios que fiz no curso.</p>
-            <a class="botao" href="#trimestres">Ver o que estudei</a>
+            <h1>Nosso portfólio</h1>
+            <p>Andrey Simoneto e Nicolas Derik Souza</p>
         </section>
         <section id="trimestres">
-            <h2>O que eu estudei em 2026</h2>
+            <h2>O que a gente estudou no técnico</h2>
             <div class="trimestres">
                 <article class="cartao">
-                    <h3>1º trimestre</h3>
-                    <p>Comecei com o basico do PHP. Fiz exercícios com variáveis, entrada e saída e operadores aritméticos, relacionais e lógicos. Depois usei estruturas de decisão pra fazer o programa escolher o que fazer.</p>
+                    <h3>Banco de Dados</h3>
+                    <p>SQL, diagrama de classes, SELECT, ORDER BY, UPDATE, DELETE, JOIN e funções de agregação. No Firebase vimos como inserir, ler, editar e excluir dados. Também teve o projeto Off Bets.</p>
                 </article>
                 <article class="cartao">
-                    <h3>2º trimestre</h3>
-                    <p>Em PHP, vi classes, objetos, métodos, estados e atributos. Também comecei a usar o Supabase e aprendi como o PDO faz a conexão com o banco.</p>
-                    <p>Depois comecei Java. Vi variáveis, tipos primitivos, classes wrapper, conversão de tipos, formatação de saída, operadores aritméticos e estruturas de decisão. Usei <code>Scanner</code> pra ler dados e <code>Math</code> pra fazer cálculos.</p>
+                    <h3>Programação em DS</h3>
+                    <p>Em C++ vimos while, for, operador ternário, vetores, matrizes, strings, funções, struct, pilha e fila. Em Python vimos classes, objetos, herança e fizemos uma tela com Tkinter.</p>
                 </article>
                 <article class="cartao">
-                    <h3>3º trimestre</h3>
-                    <p>Usei o NetBeans e estudei pra que servem o JDK, a JRE e a JVM. Voltei na parte de classes e objetos, dessa vez em Java, e pratiquei herança, polimorfismo, encapsulamento e abstração. Também fiz telas com Swing.</p>
-                    <p>Por último vi Spring Boot, arquitetura MVC e como começar um projeto no Spring Initializr. Usei o GitHub Codespaces pra rodar o projeto pelo navegador.</p>
+                    <h3>PHP, Java e Spring Boot</h3>
+                    <p>No 1º tri vimos o basico de PHP e estruturas de decisão. No 2º vimos POO com PHP, PDO, Supabase e introdução ao Java com Scanner e Math. No 3º teve Java com NetBeans, POO e Swing, depois Spring Boot, MVC, Spring Initializr e Codespaces.</p>
                 </article>
             </div>
         </section>
@@ -61,22 +58,12 @@
         </section>
         <section id="projetos">
             <h2>Projetos do curso</h2>
-            <div class="grade">
-                <article class="cartao">
-                    <h3>Exercícios de orientação a objetos</h3>
-                    <p>Coloquei em pratica o que vi de encapsulamento, herança, polimorfismo e abstração.</p>
-                    <a href="https://github.com/andreysimonetto/EncapsulamentoHerancaPolimorfismoAbstracao">Ver atividade no GitHub</a>
-                </article>
-                <article class="cartao">
-                    <h3>Cadastro em PHP</h3>
-                    <p>Um exercício pra cadastrar, ver, editar e apagar registros usando PHP e Supabase.</p>
-                    <a href="https://github.com/andreysimonetto/CRUDPHPSubase">Ver cadastro no GitHub</a>
-                </article>
-            </div>
+            <p id="estado-projetos" role="status">Carregando os projetos…</p>
+            <div class="grade" id="lista-projetos"></div>
         </section>
         <section id="contato">
             <h2>Contato</h2>
-            <p>Pode mandar uma pergunta sobre o trabalho ou alguma ideia pra melhorar.</p>
+            <p>Deixe uma mensagem pra gente.</p>
             <form id="formulario" class="cartao formulario" method="post">
                 <label>Nome
                     <input name="nome" autocomplete="name" maxlength="100" required>
@@ -92,6 +79,9 @@
             </form>
         </section>
     </main>
-    <footer class="largura rodape">Feito por Andrey Simoneto para o curso técnico.</footer>
+    <footer class="largura rodape barra">
+        <span>Feito por Andrey Simoneto e Nicolas Derik Souza.</span>
+        <a href="/admin.html">Área administrativa</a>
+    </footer>
 </body>
 </html>
