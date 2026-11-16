@@ -1,0 +1,116 @@
+:root {
+    color-scheme: light;
+    font-family: system-ui, sans-serif;
+    --fundo: #f8f6fc;
+    --cartao: #fff;
+    --texto: #251c34;
+    --suave: #5f536a;
+    --linha: #dad0e7;
+    --destaque: #6225a5;
+    --botao: #6225a5;
+    --sobre-botao: #fff;
+    --introducao: #eee3fb;
+}
+
+:root[data-tema="escuro"] {
+    color-scheme: dark;
+    --fundo: #191424;
+    --cartao: #261e34;
+    --texto: #f5efff;
+    --suave: #d4c6e2;
+    --linha: #5b496e;
+    --destaque: #dec0ff;
+    --botao: #dec0ff;
+    --sobre-botao: #281839;
+    --introducao: #332449;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: var(--fundo);
+    color: var(--texto);
+    line-height: 1.6;
+}
+
+.largura { width: min(100% - 2rem, 62rem); margin-inline: auto; }
+.topo { background: var(--cartao); border-bottom: 1px solid var(--linha); }
+.barra, nav, .filtros { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.barra { justify-content: space-between; padding-block: 0.85rem; }
+.marca { color: var(--texto); font-weight: 700; text-decoration: none; }
+a { color: var(--destaque); text-underline-offset: 0.2em; }
+
+section { margin-block: 2.6rem; }
+
+.introducao {
+    background: var(--introducao);
+    border: 1px solid var(--linha);
+    border-radius: 1rem;
+    padding: clamp(1.4rem, 5vw, 3.5rem);
+}
+
+.introducao > p { max-width: 56ch; }
+.curso { color: var(--destaque); font-weight: 650; margin-top: 0; }
+h1, h2, h3 { line-height: 1.2; }
+h1 { margin: 0; font-size: clamp(2rem, 6vw, 3.5rem); }
+h2 { margin-bottom: 1rem; }
+h3 { margin: 0 0 0.45rem; }
+p { color: var(--suave); }
+
+.grade {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 0.85rem;
+}
+
+.cartao {
+    background: var(--cartao);
+    border: 1px solid var(--linha);
+    border-radius: 0.8rem;
+    padding: 1.1rem;
+}
+
+.cartao p:last-child { margin-bottom: 0; }
+.detalhe { color: var(--destaque); font-size: 0.9rem; margin: 0; }
+.filtros { margin-bottom: 1rem; }
+.formulario { max-width: 35rem; display: grid; gap: 0.8rem; }
+.formulario .botao { justify-self: start; }
+.formulario [role="status"] { margin: 0; }
+#estado-tecnologias:empty { margin: 0; }
+
+label { display: grid; gap: 0.25rem; font-weight: 600; }
+
+input, textarea, select, button {
+    font: inherit;
+    color: inherit;
+    background: var(--cartao);
+    border: 1px solid var(--linha);
+    border-radius: 0.45rem;
+    padding: 0.45rem 0.7rem;
+}
+
+textarea { resize: vertical; }
+button { cursor: pointer; }
+button:disabled { opacity: 0.65; cursor: wait; }
+
+.botao {
+    display: inline-block;
+    padding: 0.55rem 0.85rem;
+    background: var(--botao);
+    color: var(--sobre-botao);
+    border: 1px solid transparent;
+    border-radius: 0.45rem;
+    text-decoration: none;
+    font-weight: 650;
+}
+
+:focus-visible { outline: 2px solid var(--destaque); outline-offset: 3px; }
+
+.rodape {
+    padding-block: 1.1rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--linha);
+    color: var(--suave);
+    font-size: 0.9rem;
+}
